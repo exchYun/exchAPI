@@ -9,10 +9,10 @@ public class ConstantKey {
     /**
      * api访问公钥
      */
-    public static final String ACCESS_KEY = "**************************";
+    public static final String ACCESS_KEY = "xxxxxxxxx";
 
     /**
      * api访问私钥
      */
-    public static final String SECRET_KEY = "***************************";
+    public static final String SECRET_KEY = "xxxxxxxxxxxx";
 }
