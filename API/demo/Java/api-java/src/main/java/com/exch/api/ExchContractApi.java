@@ -53,7 +53,19 @@ public class ExchContractApi {
     }
 
     /**
-     * 获取单个交易对的历史成交
+     * 获取单个交易对的k线
+     */
+    public void getKline(String symbol, String klineType, String klineStep){
+        String method = "/contract/market/kline";
+        String param = "symbol=" + symbol + "&klineType=" + klineType + "&klineStep=" + klineStep + "&accessKey=" + URLEncoder.encode(ConstantKey.ACCESS_KEY);
+        String returnJson = ExchApiUtil.sendGet(method, param);
+        JSONObject object = JSON.parseObject(returnJson);
+        System.out.println("getKline:" + object.toString());
+    }
+
+
+    /**
+     * 获取单个交易对的深度
      */
     public void getDepth(String symbol, String step){
         String method = "/contract/market/depth";
@@ -249,6 +261,7 @@ public class ExchContractApi {
 //        api.getTicker("btc_usdt_sustainable");
 //        api.getTrade("btc_usdt_sustainable");
 //        api.getDepth("btc_usdt_sustainable", "STEP0");
+        api.getKline("btc_usdt_sustainable", "MIN5", "STEP0");
 //        ContractEntrustSaveRequest request = new ContractEntrustSaveRequest();
 //        request.setSymbol("btc_usdt_sustainable");
 //        request.setPositionsType("BY"); // 逐仓
@@ -267,7 +280,7 @@ public class ExchContractApi {
 //            api.currentEntrust(null, "btc_usdt_sustainable", null, null, null, null, null, null, null, null);
 //        api.historyEntrust(null, "btc_usdt_sustainable", null, null, null, null, null, null, null, null);
 //        api.entrustOrder(null, "btc_usdt_sustainable",  null, null, null, null, null, null);
-            api.getActualAccount("BTC", "BY");
+//            api.getActualAccount("BTC", "BY");
     }
 
 
