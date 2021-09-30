@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.exch.constants.ConstantKey;
 import com.exch.exchApiUtils.ExchApiUtil;
 import com.exch.request.ContractEntrustSaveRequest;
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -254,6 +255,37 @@ public class ExchContractApi {
         System.out.println("getActualAccount:" + object.toString());
     }
 
+    /**
+     * 查询用户持仓汇总
+     */
+    public void summaryPosition(String symbol, String positionsType, String contractType){
+        String method = "/contract/Storage/summaryPosition";
+        StringBuffer params = new StringBuffer();
+        params.append("symbol=" + symbol);
+        if (!Strings.isNullOrEmpty(positionsType)) params.append("&symbol=" + positionsType);
+        if (!Strings.isNullOrEmpty(contractType)) params.append("&contractType=" + contractType);
+        String param = params.toString() + "&accessKey=" + URLEncoder.encode(ConstantKey.ACCESS_KEY);
+        String returnJson = ExchApiUtil.sendGet(method, param);
+        JSONObject object = JSON.parseObject(returnJson);
+        System.out.println("summaryPosition:" + object.toString());
+    }
+
+    /**
+     * 查询用户当前持仓  600620781159841792
+     */
+    public void currentPosition(String symbol, String positionsType, String contractType, String userId){
+        String method = "/contract/Storage/currentPosition";
+        StringBuffer params = new StringBuffer();
+        params.append("symbol=" + symbol);
+        if (!Strings.isNullOrEmpty(positionsType)) params.append("&symbol=" + positionsType);
+        if (!Strings.isNullOrEmpty(contractType)) params.append("&contractType=" + contractType);
+        if (!Strings.isNullOrEmpty(userId)) params.append("&userId=" + userId);
+        String param = params.toString() + "&accessKey=" + URLEncoder.encode(ConstantKey.ACCESS_KEY);
+        String returnJson = ExchApiUtil.sendGet(method, param);
+        JSONObject object = JSON.parseObject(returnJson);
+        System.out.println("currentPosition:" + object.toString());
+    }
+
 
     public static void main(String[] args) {
         ExchContractApi api = new ExchContractApi();
@@ -261,7 +293,7 @@ public class ExchContractApi {
 //        api.getTicker("btc_usdt_sustainable");
 //        api.getTrade("btc_usdt_sustainable");
 //        api.getDepth("btc_usdt_sustainable", "STEP0");
-        api.getKline("btc_usdt_sustainable", "MIN5", "STEP0");
+//        api.getKline("btc_usdt_sustainable", "MIN5", "STEP0");
 //        ContractEntrustSaveRequest request = new ContractEntrustSaveRequest();
 //        request.setSymbol("btc_usdt_sustainable");
 //        request.setPositionsType("BY"); // 逐仓
@@ -271,9 +303,7 @@ public class ExchContractApi {
 //        request.setPrice(new BigDecimal("43000"));
 //        request.setCount(new BigDecimal("0.23"));
 //        api.saveEntrust(request);
-
 //        api.cancelEntrust("891011203923726336622078536970145793");
-
 //        String a = "[\"891003182082445312622078536970145793\",\"891003248616689664622078536970145793\"]";
 //        api.cancelEntrusts(a);
 //        api.cancelEntrustsParam("btc_usdt_sustainable", null, null, null, null, null, null);
@@ -281,6 +311,8 @@ public class ExchContractApi {
 //        api.historyEntrust(null, "btc_usdt_sustainable", null, null, null, null, null, null, null, null);
 //        api.entrustOrder(null, "btc_usdt_sustainable",  null, null, null, null, null, null);
 //            api.getActualAccount("BTC", "BY");
+        api.summaryPosition("btc_usdt_sustainable", null, null);
+//        api.currentPosition("btc_usdt_sustainable", null, null, null);
     }
 
 
